@@ -1,23 +1,34 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function App() {
+
+
+  const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+    axios.get('https://randomuser.me/api/?results=100')
+      .then(res => setData(res.data.results));
+  }, [])
+
+  console.log(data);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {data.map((val, idx) => (
+        <div key={idx} className="info">
+          <img src={val.picture.large} />
+          <h5 className='h5'>{val.name.title}. {val.name.first} {val.name.last}</h5>
+          <h5 className='h5'>Country {val.location.country}</h5>
+          <img
+            src={'https://countryflagsapi.com/png/' + val.location.country}
+            style={{width:'10rem', height:'6rem'}}
+          />
+        </div>
+      ))}
     </div>
   );
 }
