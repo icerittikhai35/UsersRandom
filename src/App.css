@@ -1,14 +1,30 @@
 .App {
   text-align: center;
   display: grid;
+  padding: 10px;
+  
+}
+.BoxlistItems{
+  text-align: center;
+  display: grid;
   grid-template-columns: repeat(4,1fr);
   grid-gap: 5px;
+  padding: 10px
+}
+.BoxInput{
+  text-align: center;
+  align-items: center;
+  justify-content: center;
   padding: 10px;
+  width: 100%;
+
 }
 .info {
-  background-color: rgb(229, 229, 229);
-  border-radius: 2px;
-  padding: 10px;
+  background-color: rgb(239, 239, 239);
+  border-radius: 15px;
+  margin: 10px;
+  padding-bottom: 25px;
+  padding-top: 25px;
 }
 
 .App-logo {
