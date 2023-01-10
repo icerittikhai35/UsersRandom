@@ -1,7 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 function App() {
@@ -16,12 +15,13 @@ function App() {
   // console.log(data);
   const [rice, setRice] = useState([]);
   const [dataInput, setDataInput] = useState("");
-  const [loadingdataInput, setLoadingDataInput] = useState(false);
+  const [dataParams, setDataParams] = useState("pork");
   const [loading, setLoading] = useState(true);
+
   const options = {
     method: 'GET',
     url: 'https://edamam-food-and-grocery-database.p.rapidapi.com/parser',
-    params: { ingr: 'pork' },
+    params: { ingr: dataParams },
     headers: {
       'X-RapidAPI-Key': '9eaa2a4320msheb344641ce08f70p1142b1jsnd7be46274f54',
       'X-RapidAPI-Host': 'edamam-food-and-grocery-database.p.rapidapi.com'
@@ -51,27 +51,33 @@ function App() {
     }
 
     fetchData();
-  }, []);
+  });
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setDataParams(`${dataInput}`);
 
-
-
-  //ปุ่มโหลด
-  function simulateNetworkRequest() {
-    return new Promise((resolve) => setTimeout(resolve, 2000));
   }
 
-  const [isLoading, setLoadingInput] = useState(false);
 
-  useEffect(() => {
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoadingInput(false);
-      });
-    }
-  }, [isLoading]);
 
-  const handleClick = () => setLoadingInput(true) && setDataInput("");
+
+  // //ปุ่มโหลด
+  // function simulateNetworkRequest() {
+  //   return new Promise((resolve) => setTimeout(resolve, 2000));
+  // }
+
+  // const [isLoading, setLoadingInput] = useState(false);
+
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     simulateNetworkRequest().then(() => {
+  //       setLoadingInput(false);
+  //     });
+  //   }
+  // }, [isLoading]);
+
+  // const handleClick = () => setLoadingInput(true) && setDataInput("");
 
   return (
     <div className="App">
@@ -79,20 +85,16 @@ function App() {
         <h2>Search Kcal in Foods</h2>
         <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', }}>
           <div>
-            <Form>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Control type="text" placeholder="Pork" value={dataInput}  />
-              </Form.Group>
-            </Form>
-          </div>
-          <div>
-            <Button
-              variant="primary"
-              disabled={isLoading}
-              onClick={!isLoading ? handleClick : null}
-            >
-              {isLoading ? 'Loading…' : 'Seaech'}
-            </Button>
+            <form onSubmit={handleSubmit}>
+              <label>Enter your Food: {dataParams}
+                <input
+                  type="text"
+                  value={dataInput}
+                  onChange={(e) => setDataInput(e.target.value)}
+                />
+              </label>
+              <input type="submit" />
+            </form>
           </div>
 
 
