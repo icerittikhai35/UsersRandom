@@ -36,22 +36,26 @@ function App() {
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        axios.request(options).then(response => {
-          setRice(response.data.hints);
-        })
-
-      } catch (error) {
-        console.error(error.message);
-        alert('ไม่มีข้อมูล')
+    setTimeout(()=>{
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          axios.request(options).then(response => {
+            setRice(response.data.hints);
+          })
+  
+        } catch (error) {
+          console.error(error.message);
+          alert('ไม่มีข้อมูล')
+        }
+        setLoading(false);
       }
-      setLoading(false);
-    }
+      fetchData();
+    },2000)
+    
 
-    fetchData();
-  });
+   
+  },[rice]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
